@@ -5,14 +5,12 @@ namespace test_project.Models
 {
     public class Student
     {
-        //[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
-        //public int No { get; set; }
+        [Key] public string? StudentId { get; set; }
 
-        [Key]
-        public string StudentId { get; set; }
+        public string? FullName { get; set; }
 
-        public string FullName { get; set; }
+        public int Mobile { get; set; }
 
-        public string Mobile { get; set; }
+        [ForeignKey("Departments")] public string? DeptId { get; set; }
     }
 }

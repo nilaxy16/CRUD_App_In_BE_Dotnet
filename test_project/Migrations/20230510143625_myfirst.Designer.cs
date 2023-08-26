@@ -11,8 +11,8 @@ using test_project.Models;
 namespace test_project.Migrations
 {
     [DbContext(typeof(StudentsAPIDbContext))]
-    [Migration("20230504214200_MyFirst")]
-    partial class MyFirst
+    [Migration("20230510143625_myfirst")]
+    partial class myfirst
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,18 +24,32 @@ namespace test_project.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("test_project.Models.Department", b =>
+                {
+                    b.Property<string>("DeptId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DeptName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DeptId");
+
+                    b.ToTable("Departments");
+                });
+
             modelBuilder.Entity("test_project.Models.Student", b =>
                 {
                     b.Property<string>("StudentId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FullName")
-                        .IsRequired()
+                    b.Property<string>("DeptId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Mobile")
-                        .IsRequired()
+                    b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Mobile")
+                        .HasColumnType("int");
 
                     b.HasKey("StudentId");
 

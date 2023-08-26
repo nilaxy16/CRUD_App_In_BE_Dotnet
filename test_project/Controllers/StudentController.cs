@@ -28,7 +28,8 @@ namespace test_project.Controllers
             {
                 StudentId = addStudentRequest.StudentId,
                 FullName = addStudentRequest.FullName,
-                Mobile = addStudentRequest.Mobile
+                Mobile = addStudentRequest.Mobile,
+                DeptId = addStudentRequest.DeptId
             };
             await DbContext.Students.AddAsync(student);
             await DbContext.SaveChangesAsync();
@@ -36,10 +37,10 @@ namespace test_project.Controllers
         }
 
         [HttpGet]
-        [Route("{StudentId}")]
-        public async Task<IActionResult> GetContact([FromRoute] string StudentId)
+        [Route("{studentId}")]
+        public async Task<IActionResult> GetContact([FromRoute] string studentId)
         {
-            var student = await DbContext.Students.FindAsync(StudentId);
+            var student = await DbContext.Students.FindAsync(studentId);
             if (student == null)
             {
                 return NotFound();
@@ -56,6 +57,7 @@ namespace test_project.Controllers
             {
                 student.FullName = updateStudentRequest.FullName;
                 student.Mobile = updateStudentRequest.Mobile;
+                student.DeptId = updateStudentRequest.DeptId;
                 await DbContext.SaveChangesAsync();
                 return Ok(student);
             }
@@ -74,6 +76,13 @@ namespace test_project.Controllers
                 return Ok(student);
             }
             return NotFound();
+        }
+
+
+        [HttpGet("Department")]
+        public async Task<IActionResult> GetDepartment()
+        {
+            return Ok(DbContext.Departments.ToList());
         }
     }
 }
